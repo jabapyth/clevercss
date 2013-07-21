@@ -236,7 +236,7 @@
             width: $other_button.width()
             height: $other_button.height()
 
-    See the accompanying file "sprites_format.txt" for more information on that
+    See the accompanying file "misc/sprites_format.txt" for more information on that
     file format.
 
     :copyright: Copyright 2007 by Armin Ronacher, Georg Brandl.
@@ -1830,10 +1830,11 @@ def main():
     if sys.argv[0] is None:
         sys.argv[0] = "clevercss.py"
     parser = optparse.OptionParser()
+    parser.add_option("-V", "--version", action="store_true", help="Print out version info.")
     parser.add_option("-o", "--out", metavar="FILE", help="Send output to FILE.")
     parser.add_option("--eigen-test", action="store_true", help="Run eigen test.")
     parser.add_option("--list-colors", action="store_true", help="List defined colors.")
-    parser.add_option("-V", "--version", action="store_true", help="Print out version info.")
+    parser.add_option("--minified", action='store_true', help='minify the resulting css')
     parser.set_usage("""usage: %prog <file 1> ... <file n>
 
 If called with some filenames it will read each file, cut of
@@ -1860,11 +1861,11 @@ To get a list of known color names call it with --list-colors""")
         return
 
     # evaluate the example from the docstring.
-    if options.eigen_test:
+    if opts.eigen_test:
         print convert('\n'.join(l[8:].rstrip() for l in
                       re.compile(r'Example::\n(.*?)__END__(?ms)')
                         .search(__doc__).group(1).splitlines()),
-                      minified=options.minified)
+                      minified=opts.minified)
         return
     # color list
     elif opts.list_colors:
@@ -1876,7 +1877,7 @@ To get a list of known color names call it with --list-colors""")
     # read from stdin and write to stdout
     elif not args:
         try:
-            print convert(sys.stdin.read(), minified=options.minified)
+            print convert(sys.stdin.read(), minified=opts.minified)
         except (ParserError, EvalException), e:
             sys.stderr.write('Error: %s\n' % e)
             sys.exit(1)

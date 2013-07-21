@@ -122,7 +122,7 @@ class ConvertTestCase(TestCase):
       dir as clevercss)
       """
       self.assertEqual(convert(dedent("""
-      @import url(tests/example.ccss)
+      @import url(clevercss/tests/example.ccss)
       
       div:
           color: $arg
